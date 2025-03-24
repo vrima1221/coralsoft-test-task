@@ -1,68 +1,33 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { BaseQueryFn, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { CatModel } from "../types/cat";
 
-interface CatModel {
-	weight: { imperial: string; metric: string };
-	id: string;
-	name: string;
-	cfa_url: string;
-	vetstreet_url: string;
-	vcahospitals_url: string;
-	temperament: string;
-	origin: string;
-	country_codes: string;
-	country_code: string;
-	description: string;
-	life_span: string;
-	indoor: number;
-	lap: number;
-	alt_names: string;
-	adaptability: number;
-	affection_level: number;
-	child_friendly: number;
-	dog_friendly: number;
-	energy_level: number;
-	grooming: number;
-	health_issues: number;
-	intelligence: number;
-	shedding_level: number;
-	social_needs: number;
-	stranger_friendly: number;
-	vocalisation: number;
-	experimental: number;
-	hairless: number;
-	natural: number;
-	rare: number;
-	rex: number;
-	suppressed_tail: number;
-	short_legs: number;
-	wikipedia_url: string;
-	hypoallergenic: number;
-	reference_image_id: string;
-	image?: {
-		id: string;
-		width: number;
-		height: number;
-		url: string;
-	};
-}
-
-const baseQuery = fetchBaseQuery({
-	baseUrl: "/",
+const baseQuery: BaseQueryFn = fetchBaseQuery({
+  baseUrl: import.meta.env.VITE_API_BASE_URL,
+  prepareHeaders: (headers) => {
+    headers.set("x-api-key", import.meta.env.VITE_API_KEY);
+    return headers;
+  },
 });
 
-const baseQueryWithRetry = async (args: any, api: any, extraOptions: any) => {
-	let result = await baseQuery(args, api, extraOptions);
-	if (result.error) {
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-		result = await baseQuery(args, api, extraOptions);
-	}
-	return result;
+const baseQueryWithRetry: BaseQueryFn = async (args, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions);
+  if (result.error) {
+    result = await baseQuery(args, api, extraOptions);
+  }
+  return result;
 };
 
 export const catsApi = createApi({
-	reducerPath: "catsApi",
-	baseQuery: baseQueryWithRetry,
-	endpoints: (builder) => ({}),
+  reducerPath: "catsApi",
+  baseQuery: baseQueryWithRetry,
+  endpoints: (builder) => ({
+    getBreeds: builder.query<CatModel[], void>({
+      query: () => ({
+        url: "/breeds",
+        params: { limit: 10, page: 0 },
+      }),
+    }),
+  }),
 });
 
-export const {} = catsApi;
+export const { useGetBreedsQuery } = catsApi;
