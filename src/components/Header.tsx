@@ -18,7 +18,7 @@ const Header = () => {
         {isAuthenticated && (
           <button
             onClick={handleLogout}
-            className="p-2 bg-red-600 text-white rounded"
+            className="p-2 bg-red-600 text-white rounded cursor-pointer"
           >
             Logout
           </button>

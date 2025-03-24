@@ -12,7 +12,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={handleToggle}
-      className="p-2 bg-gray-800 text-white dark:border-2 border-gray-50 rounded"
+      className="p-2 bg-gray-800 text-white dark:border-2 border-gray-50 rounded cursor-pointer"
     >
       {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
     </button>

@@ -24,7 +24,7 @@ const BreedsGrid = ({ cats }: { cats: CatModel[] }) => {
       <div className="flex justify-between mb-4">
         {/* Sorting Dropdown */}
         <select
-          className="hs-dropdown-toggle border px-2 py-2 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+          className="hs-dropdown-toggle border px-2 py-2 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white cursor-pointer"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
@@ -35,7 +35,7 @@ const BreedsGrid = ({ cats }: { cats: CatModel[] }) => {
 
         {/* Filtering Dropdown */}
         <select
-          className="hs-dropdown-toggle border px-2 py-2 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+          className="hs-dropdown-toggle border px-2 py-2 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white cursor-pointer"
           value={filterOrigin}
           onChange={(e) => setFilterOrigin(e.target.value)}
         >
